@@ -7,10 +7,12 @@ import ItemList from '../itemList';
 import CharDetails from '../charDetails';
 
 
+
 export default class App extends Component {
 
     state = {
         hideRandom: true,
+        selectedId: 41
     }
 
     onToggleRandom = () => {
@@ -19,8 +21,12 @@ export default class App extends Component {
         }))
     }
 
+    onCharSelect = (id) => {
+        this.setState({selectedId: id})
+    }
+
     render() {
-        const {hideRandom} = this.state;
+        const {hideRandom, selectedId} = this.state;
         const randomChar = hideRandom ? <RandomChar/> : null;
 
         return (
@@ -32,15 +38,18 @@ export default class App extends Component {
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
                             {randomChar}
-                            <Button onClick={this.onToggleRandom} color="danger">Toggle random character</Button>
+                            <Button 
+                            onClick={this.onToggleRandom} 
+                            color="danger"
+                            >Toggle random character</Button>
                         </Col>
                     </Row>
                     <Row>
                         <Col md='6'>
-                            <ItemList />
+                            <ItemList onCharSelected={this.onCharSelect}/>
                         </Col>
                         <Col md='6'>
-                            <CharDetails />
+                            <CharDetails selectedId={selectedId}/>
                         </Col>
                     </Row>
                 </Container>

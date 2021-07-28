@@ -22,7 +22,7 @@ export default class GotServices {
         return this._transformCharacter(character);
     }
     async getAllBooks() {
-        const books = await this.getResourse(`/characters?page=5&pageSize=10`);
+        const books = await this.getResourse(`/books?page=5&pageSize=10`);
         return books.map(this._transformBook);
     }
     async getBook(id) {
@@ -30,7 +30,7 @@ export default class GotServices {
         return this._transformBook(book);
     }
     async getAllHouses() {
-        const houses = await this.getResourse(`/characters?page=5&pageSize=10`);
+        const houses = await this.getResourse(`/houses?page=5&pageSize=10`);
         return houses.map(this._transformHouse);
     }
     async getHouse(id) {
@@ -47,9 +47,14 @@ export default class GotServices {
         }
     }
 
+    _extractId = (item) => {
+        const idRegExp = /\/([0-9]*)$/;
+        return item.url.match(idRegExp)[1];
+    }
 
-    _transformCharacter(char) {
+    _transformCharacter = (char) => {
         return {
+            id: this._extractId(char),
             name: this.checkData(char.name),
             gender: this.checkData(char.gender),
             born: this.checkData(char.born),
