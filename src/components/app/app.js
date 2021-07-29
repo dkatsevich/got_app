@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './app.css'
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import ItemDetails from '../itemDetails';
 import CharacterPage from '../pages/characterPage';
 import BooksPage from '../pages/booksPage';
+import BookPage from '../pages/bookPage';
 import HousesPage from '../pages/housesPage/housesPage';
-
-
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 export default class App extends Component {
 
@@ -26,29 +25,39 @@ export default class App extends Component {
     
 
     render() {
-        const {hideRandom, selectedId} = this.state;
+        const {hideRandom} = this.state;
         const randomChar = hideRandom ? <RandomChar/> : null;
 
         return (
-            <> 
-                <Container>
-                    <Header />
-                </Container>
-                <Container>
-                    <Row>
-                        <Col lg={{size: 5, offset: 0}}>
-                            {randomChar}
-                            <Button 
-                            onClick={this.onToggleRandom} 
-                            color="danger"
-                            >Toggle random character</Button>
-                        </Col>
-                    </Row>
-                    <CharacterPage/>
-                    <BooksPage/>
-                    <HousesPage/>
-                </Container>
-            </>
+            <Router>
+                <div className='app'> 
+                    <Container>
+                        <Header />
+                    </Container>
+                    <Container>
+                        <Row>
+                            <Col lg={{size: 5, offset: 0}}>
+                                {randomChar}
+                                <Button 
+                                onClick={this.onToggleRandom} 
+                                color="danger"
+                                >Toggle random character</Button>
+                            </Col>
+                        </Row>
+                        <Route path='/' exact component={() => <h1>Hello</h1>}/>
+                        <Route path='/characters' component={CharacterPage}/>
+                        <Route path='/houses' component={HousesPage}/>
+                        <Route path='/books' exact component={BooksPage}/>
+                        <Route path='/books/:id' render={
+                            ({match}) => {
+                                const {id} = match.params;
+
+                                return <BookPage selectedId={id}/>
+                            }
+                        }/>
+                    </Container>
+                </div>
+            </Router>
         );
     }
 };

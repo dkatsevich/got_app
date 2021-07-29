@@ -6,6 +6,8 @@
     "bootstrap": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "latest",
     "reactstrap": "latest",
     "styled-components": "latest"
