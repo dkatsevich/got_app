@@ -4,7 +4,10 @@ import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import ItemDetails from '../itemDetails';
+import CharacterPage from '../pages/characterPage';
+import BooksPage from '../pages/booksPage';
+import HousesPage from '../pages/housesPage/housesPage';
 
 
 
@@ -12,7 +15,6 @@ export default class App extends Component {
 
     state = {
         hideRandom: true,
-        selectedId: 41
     }
 
     onToggleRandom = () => {
@@ -21,9 +23,7 @@ export default class App extends Component {
         }))
     }
 
-    onCharSelect = (id) => {
-        this.setState({selectedId: id})
-    }
+    
 
     render() {
         const {hideRandom, selectedId} = this.state;
@@ -44,14 +44,9 @@ export default class App extends Component {
                             >Toggle random character</Button>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col md='6'>
-                            <ItemList onCharSelected={this.onCharSelect}/>
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails selectedId={selectedId}/>
-                        </Col>
-                    </Row>
+                    <CharacterPage/>
+                    <BooksPage/>
+                    <HousesPage/>
                 </Container>
             </>
         );
