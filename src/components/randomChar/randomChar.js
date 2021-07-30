@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import React, {Component} from 'react';
 import GotServices from '../../services/gotServices';
 import ErrorMessage from '../errorMessage/errorMessage';
@@ -11,7 +12,7 @@ export default class RandomChar extends Component {
 
     componentDidMount() {
         this.updateCharacter()
-        this.timerId = setInterval(this.updateCharacter, 1500);
+        this.timerId = setInterval(this.updateCharacter, this.props.interval);
     }
 
     componentWillUnmount() {
@@ -60,6 +61,15 @@ export default class RandomChar extends Component {
             </div>
         );
     }
+}
+
+RandomChar.defaultProps = {
+    interval: 15000
+}
+
+
+RandomChar.propTypes = {
+    interval: PropTypes.number
 }
 
 const View = ({char}) => {

@@ -1,24 +1,18 @@
-import React, {Component} from 'react';
-import GotServices from '../../services/gotServices';
+import React from 'react';
 import './itemList.css';
-import Spinner from './../spinner/spinner';
+import withData from '../withData';
 
-export default class ItemList extends Component {
-    gotServices = new GotServices();
+const ItemList = ({writeData, onItemSelected, data}) => {
 
-    state = {
-        ItemList: null
-    }
-
-    renderItems(arr) {
+    const renderItems = (arr) => {
         return arr.map((item) => {
             const {id} = item;
-            const label = this.props.writeData(item)
+            const label = writeData(item)
             return (
                 <li
                     key={id}
                     className="list-group-item"
-                    onClick={() => this.props.onItemSelected(id)}
+                    onClick={() => onItemSelected(id)}
                     >
                     {label}
                 </li>
@@ -26,27 +20,14 @@ export default class ItemList extends Component {
         })
     }
 
-    componentDidMount() {
-        const {getData} = this.props;
-        getData()
-            .then(ItemList => {
-                this.setState({ItemList})
-            })
-    }
+    const items = renderItems(data);
 
-    render() {
-        const {ItemList} = this.state;
-
-        if (!ItemList) {
-            return <Spinner/>
-        }
-
-        const items = this.renderItems(ItemList);
-
-        return (
-            <ul className="item-list list-group">
-                {items}
-            </ul>
-        );
-    }
+    return (
+        <ul className="item-list list-group">
+            {items}
+        </ul>
+    );
 }
+
+
+export default withData(ItemList);

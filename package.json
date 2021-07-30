@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "latest",
+    "prop-types": "^15.7.2",
     "react": "latest",
     "react-dom": "latest",
     "react-router": "^5.2.0",

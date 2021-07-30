@@ -8,7 +8,9 @@ import CharacterPage from '../pages/characterPage';
 import BooksPage from '../pages/booksPage';
 import BookPage from '../pages/bookPage';
 import HousesPage from '../pages/housesPage/housesPage';
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import NotFound from '../pages/notFound';
+
 
 export default class App extends Component {
 
@@ -44,17 +46,20 @@ export default class App extends Component {
                                 >Toggle random character</Button>
                             </Col>
                         </Row>
-                        <Route path='/' exact component={() => <h1>Hello</h1>}/>
-                        <Route path='/characters' component={CharacterPage}/>
-                        <Route path='/houses' component={HousesPage}/>
-                        <Route path='/books' exact component={BooksPage}/>
-                        <Route path='/books/:id' render={
-                            ({match}) => {
-                                const {id} = match.params;
+                        <Switch>
+                            <Route path='/' exact component={() => <h1 style={{color: 'white'}}>Main page ;)</h1>}/>
+                            <Route path='/characters' component={CharacterPage}/>
+                            <Route path='/houses' component={HousesPage}/>
+                            <Route path='/books' exact component={BooksPage}/>
+                            <Route path='/books/:id' render={
+                                ({match}) => {
+                                    const {id} = match.params;
 
-                                return <BookPage selectedId={id}/>
-                            }
-                        }/>
+                                    return <BookPage selectedId={id}/>
+                                }
+                            }/>
+                            <Route path='*' exact component={NotFound}/>
+                        </Switch>
                     </Container>
                 </div>
             </Router>
